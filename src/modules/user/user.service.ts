@@ -9,6 +9,6 @@ export class UserService {
 
   async createUser(data: CreateUserDTO): Promise<UserCreatedDTO> {
     const password = await hash(data.password, 10);
-    return this.userRepository.save({ ...data, password });
+    return await this.userRepository.save({ ...data, password });
   }
 }
