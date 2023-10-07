@@ -11,15 +11,53 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
-  email     String   @unique
+  email     String    @unique
   phone     String?
-  cpf       String   @unique
+  cpf       String    @unique
   password  String
-  typeUser  Int      @default(1)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  typeUser  Int       @default(1)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  Address   Address[]
 
   @@map("users")
+}
+
+model State {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  City      City[]
+
+  @@map("states")
+}
+
+model City {
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  State     State     @relation(fields: [stateId], references: [id])
+  stateId   Int
+  Addresses Address[]
+
+  @@map("cities")
+}
+
+model Address {
+  id            Int      @id @default(autoincrement())
+  complement    String?
+  numberAddress Int
+  cep           String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now())
+  City          City     @relation(fields: [cityId], references: [id])
+  cityId        Int
+  User          User     @relation(fields: [userId], references: [id])
+  userId        Int
+
+  @@map("addresses")
 }
