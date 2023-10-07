@@ -4,5 +4,5 @@ export type StateDTO = {
   uf: string;
   createdAt: Date;
   updatedAt: Date;
-  // City: any[];
+  City: any[]; //CityDTO[];
 };

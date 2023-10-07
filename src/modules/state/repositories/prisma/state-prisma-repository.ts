@@ -8,7 +8,11 @@ export class StatePrismaRepository implements IStateRepository {
   constructor(private prisma: PrismaService) {}
 
   async findAll(): Promise<StateDTO[]> {
-    const states = await this.prisma.state.findMany();
+    const states = await this.prisma.state.findMany({
+      include: {
+        City: true,
+      },
+    });
     return states;
   }
 }
