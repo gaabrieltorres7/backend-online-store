@@ -1,6 +1,5 @@
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Inject, Injectable } from '@nestjs/common';
-import { Cache } from 'cache-manager';
+import { Injectable } from '@nestjs/common';
+import { CacheService } from '../cache/cache.service';
 import { CityDTO } from './dto/city.dto';
 import { CityPrismaRepository } from './repositories/prisma/city-prisma-repository';
 
@@ -8,21 +7,15 @@ import { CityPrismaRepository } from './repositories/prisma/city-prisma-reposito
 export class CityService {
   constructor(
     private readonly cityRepository: CityPrismaRepository,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private readonly cacheService: CacheService,
   ) {}
 
   async getAllCitiesByStateId(stateId: number) {
-    const citiesCache: CityDTO[] = await this.cacheManager.get(
+    return this.cacheService.getCache<CityDTO[]>(
       `state_${stateId}`,
+      async () => {
+        return await this.cityRepository.getAllCitiesByStateId(stateId);
+      },
     );
-    if (citiesCache) {
-      return citiesCache;
-    }
-
-    const cities = await this.cityRepository.getAllCitiesByStateId(stateId);
-
-    await this.cacheManager.set(`state_${stateId}`, cities);
-
-    return cities;
   }
 }
