@@ -7,7 +7,7 @@ import { IUserRepository } from '../user-interface';
 export class UserPrismaRepository implements IUserRepository {
   constructor(private prisma: PrismaService) {}
 
-  async save(data: CreateUserDTO): Promise<UserCreatedDTO> {
+  async save(data: CreateUserDTO): Promise<UserCreatedDTO | null> {
     return await this.prisma.user.create({ data });
   }
 }

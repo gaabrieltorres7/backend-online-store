@@ -7,8 +7,8 @@ import { UserPrismaRepository } from './repositories/prisma/user-prisma-reposito
 export class UserService {
   constructor(private readonly userRepository: UserPrismaRepository) {}
 
-  async createUser(data: CreateUserDTO): Promise<UserCreatedDTO> {
+  async createUser(data: CreateUserDTO): Promise<UserCreatedDTO | null> {
     const password = await hash(data.password, 10);
-    return await this.userRepository.save({ ...data, password });
+    return await this.userRepository.save({ ...data, password }); //type user?
   }
 }

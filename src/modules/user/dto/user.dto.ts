@@ -1,7 +1,7 @@
 export type CreateUserDTO = {
   name: string;
   email: string;
-  phone: string;
+  phone: string | null;
   cpf: string;
   password: string;
 };
