@@ -18,4 +18,8 @@ export class CityService {
       },
     );
   }
+
+  async findCityById(id: number): Promise<CityDTO | null> {
+    return await this.cityRepository.findCityById(id);
+  }
 }

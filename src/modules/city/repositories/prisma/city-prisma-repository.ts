@@ -18,4 +18,8 @@ export class CityPrismaRepository implements ICityRepository {
     });
     return cities;
   }
+
+  async findCityById(id: number): Promise<CityDTO | null> {
+    return await this.prisma.city.findUnique({ where: { id } });
+  }
 }

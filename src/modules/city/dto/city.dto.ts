@@ -4,5 +4,5 @@ export type CityDTO = {
   createdAt: Date;
   updatedAt: Date;
   stateId: number;
-  Addresses: any; //AddressDTO[];
+  // Addresses: any; //AddressDTO[];
 };
