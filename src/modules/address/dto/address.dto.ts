@@ -11,3 +11,7 @@ export type CreatedAddressDTO = {
   createdAt: Date;
   updatedAt: Date;
 } & CreateAddressDTO;
+
+export type returnAddressInUserDTO = {
+  id: number;
+} & CreateAddressDTO;

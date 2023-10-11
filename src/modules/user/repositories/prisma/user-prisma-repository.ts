@@ -18,4 +18,13 @@ export class UserPrismaRepository implements IUserRepository {
   async findAllUsers(): Promise<UserCreatedDTO[] | null> {
     return await this.prisma.user.findMany();
   }
+
+  async findUserByIdUsingRelations(
+    userId: number,
+  ): Promise<UserCreatedDTO | null> {
+    return await this.prisma.user.findFirst({
+      where: { id: userId },
+      include: { Address: true },
+    });
+  }
 }

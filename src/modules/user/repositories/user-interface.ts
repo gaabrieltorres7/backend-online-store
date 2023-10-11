@@ -4,4 +4,7 @@ export abstract class IUserRepository {
   abstract save(data: CreateUserDTO): Promise<UserCreatedDTO | null>;
   abstract findUserById(id: number): Promise<UserCreatedDTO | null>;
   abstract findAllUsers(): Promise<UserCreatedDTO[] | null>;
+  abstract findUserByIdUsingRelations(
+    userId: number,
+  ): Promise<UserCreatedDTO | null>;
 }

@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { UserService } from 'src/modules/user/user.service';
 import { CreateUserSchemaDTO } from './schemas/create-user.schemas';
 
@@ -19,5 +26,10 @@ export class UserController {
   @Get()
   async findAllUsers() {
     return await this.userService.findAllUsers();
+  }
+
+  @Get('/:userId')
+  async findUserById(@Param('userId', ParseIntPipe) userId: number) {
+    return await this.userService.findUserByIdUsingRelations(userId);
   }
 }

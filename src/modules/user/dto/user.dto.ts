@@ -1,3 +1,5 @@
+import { returnAddressInUserDTO } from 'src/modules/address/dto/address.dto';
+
 export type CreateUserDTO = {
   name: string;
   email: string;
@@ -8,4 +10,5 @@ export type CreateUserDTO = {
 
 export type UserCreatedDTO = {
   id: number;
+  Address?: returnAddressInUserDTO[];
 } & CreateUserDTO;

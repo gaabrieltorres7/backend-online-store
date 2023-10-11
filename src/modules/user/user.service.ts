@@ -19,4 +19,10 @@ export class UserService {
   async findAllUsers(): Promise<UserCreatedDTO[] | null> {
     return await this.userRepository.findAllUsers();
   }
+
+  async findUserByIdUsingRelations(
+    userId: number,
+  ): Promise<UserCreatedDTO | null> {
+    return await this.userRepository.findUserByIdUsingRelations(userId);
+  }
 }
