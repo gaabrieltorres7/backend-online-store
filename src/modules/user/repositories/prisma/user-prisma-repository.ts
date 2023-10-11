@@ -8,7 +8,14 @@ export class UserPrismaRepository implements IUserRepository {
   constructor(private prisma: PrismaService) {}
 
   async save(data: CreateUserDTO): Promise<UserCreatedDTO | null> {
-    //TODO: validate if user already exists
     return await this.prisma.user.create({ data });
+  }
+
+  async findUserById(id: number): Promise<UserCreatedDTO | null> {
+    return await this.prisma.user.findUnique({ where: { id } });
+  }
+
+  async findAllUsers(): Promise<UserCreatedDTO[] | null> {
+    return await this.prisma.user.findMany();
   }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UserService } from 'src/modules/user/user.service';
 import { CreateUserSchemaDTO } from './schemas/create-user.schemas';
 
@@ -14,5 +14,10 @@ export class UserController {
       password: undefined,
     };
     return newUser;
+  }
+
+  @Get()
+  async findAllUsers() {
+    return await this.userService.findAllUsers();
   }
 }

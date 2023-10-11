@@ -11,4 +11,12 @@ export class UserService {
     const password = await hash(data.password, 10);
     return await this.userRepository.save({ ...data, password }); //type user?
   }
+
+  async findUserById(id: number): Promise<UserCreatedDTO | null> {
+    return await this.userRepository.findUserById(id);
+  }
+
+  async findAllUsers(): Promise<UserCreatedDTO[] | null> {
+    return await this.userRepository.findAllUsers();
+  }
 }
