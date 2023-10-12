@@ -1,3 +1,5 @@
+import { ReturnCityInUserDTO } from 'src/modules/city/dto/city.dto';
+
 export type CreateAddressDTO = {
   complement?: string | null;
   numberAddress: number;
@@ -12,6 +14,7 @@ export type CreatedAddressDTO = {
   updatedAt: Date;
 } & CreateAddressDTO;
 
-export type returnAddressInUserDTO = {
+export type ReturnAddressInUserDTO = {
   id: number;
+  city?: ReturnCityInUserDTO;
 } & CreateAddressDTO;

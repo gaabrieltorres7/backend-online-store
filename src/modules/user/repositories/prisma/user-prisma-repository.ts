@@ -24,7 +24,17 @@ export class UserPrismaRepository implements IUserRepository {
   ): Promise<UserCreatedDTO | null> {
     return await this.prisma.user.findFirst({
       where: { id: userId },
-      include: { Address: true },
+      include: {
+        Address: {
+          include: {
+            City: {
+              include: {
+                State: true,
+              },
+            },
+          },
+        },
+      },
     });
   }
 }

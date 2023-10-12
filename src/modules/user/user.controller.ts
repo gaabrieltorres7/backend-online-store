@@ -7,6 +7,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { UserService } from 'src/modules/user/user.service';
+import { UserCreatedDTO } from './dto/user.dto';
 import { CreateUserSchemaDTO } from './schemas/create-user.schemas';
 
 @Controller('user')
@@ -29,7 +30,10 @@ export class UserController {
   }
 
   @Get('/:userId')
-  async findUserById(@Param('userId', ParseIntPipe) userId: number) {
-    return await this.userService.findUserByIdUsingRelations(userId);
+  async findUserById(
+    @Param('userId', ParseIntPipe) userId: number,
+  ): Promise<UserCreatedDTO | null> {
+    const user = await this.userService.findUserByIdUsingRelations(userId);
+    return user;
   }
 }
