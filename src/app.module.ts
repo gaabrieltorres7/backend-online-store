@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { APP_PIPE } from '@nestjs/core';
+import { APP_GUARD, APP_PIPE } from '@nestjs/core';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { AddressModule } from './modules/address/address.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CacheModule } from './modules/cache/cache.module';
 import { CityModule } from './modules/city/city.module';
+import { RolesGuard } from './modules/guards/roles.guard';
 import { StateModule } from './modules/state/state.module';
 import { UserModule } from './modules/user/user.module';
 
@@ -22,6 +23,10 @@ import { UserModule } from './modules/user/user.module';
     {
       provide: APP_PIPE,
       useClass: ZodValidationPipe,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })
