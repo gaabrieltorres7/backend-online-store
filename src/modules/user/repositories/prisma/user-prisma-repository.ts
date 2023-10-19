@@ -37,4 +37,8 @@ export class UserPrismaRepository implements IUserRepository {
       },
     });
   }
+
+  async findUserByEmail(email: string): Promise<UserCreatedDTO | null> {
+    return await this.prisma.user.findUnique({ where: { email } });
+  }
 }

@@ -7,4 +7,5 @@ export abstract class IUserRepository {
   abstract findUserByIdUsingRelations(
     userId: number,
   ): Promise<UserCreatedDTO | null>;
+  abstract findUserByEmail(email: string): Promise<UserCreatedDTO | null>;
 }

@@ -11,4 +11,5 @@ export type CreateUserDTO = {
 export type UserCreatedDTO = {
   id: number;
   Address?: ReturnAddressInUserDTO[];
+  typeUser: number;
 } & CreateUserDTO;
