@@ -1,4 +1,4 @@
-import { UserCreatedDTO } from 'src/modules/user/dto/user.dto';
+import { UserCreatedDTO } from '../../../modules/user/dto/user.dto';
 
 export type LoginDTO = {
   email: string;

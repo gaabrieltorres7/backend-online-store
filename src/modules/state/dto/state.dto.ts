@@ -1,4 +1,4 @@
-import { CityDTO } from 'src/modules/city/dto/city.dto';
+import { CityDTO } from '../../../modules/city/dto/city.dto';
 
 export type StateDTO = {
   id: number;

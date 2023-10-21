@@ -6,7 +6,7 @@ import {
   ParseIntPipe,
   Post,
 } from '@nestjs/common';
-import { UserService } from 'src/modules/user/user.service';
+import { UserService } from '../../modules/user/user.service';
 import { UserCreatedDTO } from './dto/user.dto';
 import { CreateUserSchemaDTO } from './schemas/create-user.schemas';
 

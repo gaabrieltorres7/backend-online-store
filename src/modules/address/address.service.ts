@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { UserService } from 'src/modules/user/user.service';
+import { UserService } from '../../modules/user/user.service';
 import { CityService } from '../city/city.service';
 import { CreateAddressDTO, CreatedAddressDTO } from './dto/address.dto';
 import { AddressPrismaRepository } from './repositories/prisma/address-prisma-repository';

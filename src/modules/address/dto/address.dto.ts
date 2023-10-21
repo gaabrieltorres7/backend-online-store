@@ -1,4 +1,4 @@
-import { ReturnCityInUserDTO } from 'src/modules/city/dto/city.dto';
+import { ReturnCityInUserDTO } from '../../../modules/city/dto/city.dto';
 
 export type CreateAddressDTO = {
   complement?: string | null;

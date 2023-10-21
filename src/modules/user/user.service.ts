@@ -1,11 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { hash } from 'bcrypt';
 import { CreateUserDTO, UserCreatedDTO } from './dto/user.dto';
-import { UserPrismaRepository } from './repositories/prisma/user-prisma-repository';
+import { IUserRepository } from './repositories/user-interface';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserPrismaRepository) {}
+  constructor(private readonly userRepository: IUserRepository) {}
 
   async createUser(data: CreateUserDTO): Promise<UserCreatedDTO | null> {
     const user = await this.userRepository.findUserByEmail(data.email);
@@ -29,5 +29,11 @@ export class UserService {
     userId: number,
   ): Promise<UserCreatedDTO | null> {
     return await this.userRepository.findUserByIdUsingRelations(userId);
+  }
+
+  async findUserByEmail(email: string): Promise<UserCreatedDTO | null> {
+    const user = await this.userRepository.findUserByEmail(email);
+    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    return user;
   }
 }

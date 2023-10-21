@@ -1,4 +1,4 @@
-import { ReturnStateInUserDTO } from 'src/modules/state/dto/state.dto';
+import { ReturnStateInUserDTO } from '../../../modules/state/dto/state.dto';
 
 export type CityDTO = {
   id: number;
