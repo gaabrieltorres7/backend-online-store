@@ -18,7 +18,9 @@ export class UserService {
   }
 
   async findUserById(id: number): Promise<UserCreatedDTO | null> {
-    return await this.userRepository.findUserById(id);
+    const user = await this.userRepository.findUserById(id);
+    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    return user;
   }
 
   async findAllUsers(): Promise<UserCreatedDTO[] | null> {
@@ -28,7 +30,9 @@ export class UserService {
   async findUserByIdUsingRelations(
     userId: number,
   ): Promise<UserCreatedDTO | null> {
-    return await this.userRepository.findUserByIdUsingRelations(userId);
+    const user = await this.userRepository.findUserByIdUsingRelations(userId);
+    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    return user;
   }
 
   async findUserByEmail(email: string): Promise<UserCreatedDTO | null> {
