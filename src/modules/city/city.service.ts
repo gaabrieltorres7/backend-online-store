@@ -1,12 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CacheService } from '../cache/cache.service';
 import { CityDTO } from './dto/city.dto';
-import { CityPrismaRepository } from './repositories/prisma/city-prisma-repository';
+import { ICityRepository } from './repositories/city-interface';
 
 @Injectable()
 export class CityService {
   constructor(
-    private readonly cityRepository: CityPrismaRepository,
+    private readonly cityRepository: ICityRepository,
     private readonly cacheService: CacheService,
   ) {}
 
@@ -20,6 +20,11 @@ export class CityService {
   }
 
   async findCityById(id: number): Promise<CityDTO | null> {
-    return await this.cityRepository.findCityById(id);
+    const city = await this.cityRepository.findCityById(id);
+    if (!city) {
+      throw new HttpException('City not found', HttpStatus.NOT_FOUND);
+    }
+
+    return city;
   }
 }
