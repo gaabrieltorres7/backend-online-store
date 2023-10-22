@@ -2,12 +2,12 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserService } from '../../modules/user/user.service';
 import { CityService } from '../city/city.service';
 import { CreateAddressDTO, CreatedAddressDTO } from './dto/address.dto';
-import { AddressPrismaRepository } from './repositories/prisma/address-prisma-repository';
+import { IAddressRepository } from './repositories/address-interface';
 
 @Injectable()
 export class AddressService {
   constructor(
-    private readonly addressRepository: AddressPrismaRepository,
+    private readonly addressRepository: IAddressRepository,
     private readonly userService: UserService,
     private readonly cityService: CityService,
   ) {}
