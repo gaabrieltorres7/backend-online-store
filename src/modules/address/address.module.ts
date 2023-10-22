@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { PrismaService } from '../../infra/db/prisma.service';
 import { CacheModule } from '../cache/cache.module';
 import { CityService } from '../city/city.service';
+import { ICityRepository } from '../city/repositories/city-interface';
 import { CityPrismaRepository } from '../city/repositories/prisma/city-prisma-repository';
 import { UserPrismaRepository } from '../user/repositories/prisma/user-prisma-repository';
 import { IUserRepository } from '../user/repositories/user-interface';
@@ -20,10 +21,13 @@ import { AddressPrismaRepository } from './repositories/prisma/address-prisma-re
     PrismaService,
     UserService,
     CityService,
-    CityPrismaRepository,
     {
       provide: IUserRepository,
       useClass: UserPrismaRepository,
+    },
+    {
+      provide: ICityRepository,
+      useClass: CityPrismaRepository,
     },
   ],
 })
