@@ -1,13 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
-import { UserPrismaRepository } from '../user/repositories/prisma/user-prisma-repository';
+import { IUserRepository } from '../user/repositories/user-interface';
 import { LoginDTO, ReturnLoginDTO } from './dto/auth.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private userRepository: UserPrismaRepository,
+    private userRepository: IUserRepository,
     private jwtService: JwtService,
   ) {}
 
