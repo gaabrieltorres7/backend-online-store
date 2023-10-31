@@ -1,3 +1,4 @@
+import { HttpException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CacheService } from '../cache/cache.service';
 import { CityService } from '../city/city.service';
@@ -37,6 +38,9 @@ const CITY_RECIFE = {
 const cities = [CITY_SP, CITY_SANTOS, CITY_RECIFE];
 
 const address = {
+  id: 1,
+  createdAt: new Date(),
+  updatedAt: new Date(),
   complement: 'test',
   numberAddress: 1,
   cep: 'test',
@@ -91,5 +95,16 @@ describe('AddressService', () => {
   it('should be able to create an address', async () => {
     const result = await sut.create(address);
     expect(result).toHaveProperty('id');
+  });
+
+  it('should be able to find address by user id', async () => {
+    const result = await sut.findAddressByUserId(1);
+    expect(result).toEqual([address]);
+  });
+
+  it('should not be able to find address by user id', async () => {
+    await expect(sut.findAddressByUserId(2)).rejects.toBeInstanceOf(
+      HttpException,
+    );
   });
 });
