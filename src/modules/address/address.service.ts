@@ -24,4 +24,12 @@ export class AddressService {
     }
     return await this.addressRepository.create(data);
   }
+
+  async findAddressByUserId(userId: number): Promise<CreatedAddressDTO[]> {
+    const addresses = await this.addressRepository.findAddressByUserId(userId);
+    if (!addresses || addresses.length === 0) {
+      throw new HttpException('Address not found', HttpStatus.NOT_FOUND);
+    }
+    return addresses;
+  }
 }

@@ -11,4 +11,11 @@ export class AddressPrismaRepository implements IAddressRepository {
     const address = await this.prisma.address.create({ data });
     return address;
   }
+
+  async findAddressByUserId(userId: number): Promise<CreatedAddressDTO[]> {
+    const addresses = await this.prisma.address.findMany({
+      where: { userId },
+    });
+    return addresses;
+  }
 }
