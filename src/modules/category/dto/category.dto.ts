@@ -5,3 +5,7 @@ export type CreatedCategoryDTO = {
   updatedAt: Date;
   Products?: any[];
 };
+
+export type CreateCategoryDTO = {
+  name: string;
+};
