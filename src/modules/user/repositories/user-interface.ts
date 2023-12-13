@@ -8,4 +8,5 @@ export abstract class IUserRepository {
     userId: number,
   ): Promise<UserCreatedDTO | null>;
   abstract findUserByEmail(email: string): Promise<UserCreatedDTO | null>;
+  abstract findByCPF(cpf: string): Promise<UserCreatedDTO | null>;
 }

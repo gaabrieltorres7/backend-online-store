@@ -37,4 +37,10 @@ export class UserInMemoryRepository implements IUserRepository {
 
     return user ?? null;
   }
+
+  async findByCPF(cpf: string): Promise<UserCreatedDTO | null> {
+    const user = this.users.find((user) => user.cpf === cpf);
+
+    return user ?? null;
+  }
 }
