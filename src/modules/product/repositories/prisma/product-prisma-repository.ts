@@ -11,4 +11,17 @@ export class ProductPrismaRepository implements IProductRepository {
     const products = await this.prisma.product.findMany();
     return products;
   }
+
+  async create(data: CreatedProductDTO): Promise<CreatedProductDTO> {
+    const createdProduct = await this.prisma.product.create({
+      data: {
+        categoryId: data.categoryId,
+        name: data.name,
+        price: data.price,
+        image: data.image,
+      },
+    });
+
+    return createdProduct;
+  }
 }

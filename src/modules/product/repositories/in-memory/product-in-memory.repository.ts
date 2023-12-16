@@ -7,4 +7,9 @@ export class ProductInMemoryRepository implements IProductRepository {
   async findAll(): Promise<CreatedProductDTO[]> {
     return this.products;
   }
+
+  async create(product: CreatedProductDTO): Promise<CreatedProductDTO> {
+    this.products.push(product);
+    return product;
+  }
 }
