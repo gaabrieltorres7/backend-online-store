@@ -23,4 +23,11 @@ export class CategoryPrismaRepository implements ICategoryRepository {
     });
     return category || null;
   }
+
+  async findById(id: number): Promise<CreatedCategoryDTO | null> {
+    const category = await this.prisma.category.findUnique({
+      where: { id },
+    });
+    return category || null;
+  }
 }

@@ -24,4 +24,9 @@ export class CategoryInMemoryRepository implements ICategoryRepository {
     const category = this.categories.find((category) => category.name === name);
     return category || null;
   }
+
+  async findById(id: number): Promise<CreatedCategoryDTO | null> {
+    const category = this.categories.find((category) => category.id === id);
+    return category || null;
+  }
 }
