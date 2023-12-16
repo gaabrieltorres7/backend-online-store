@@ -4,4 +4,5 @@ export abstract class ICategoryRepository {
   abstract findAll(): Promise<CreatedCategoryDTO[]>;
   abstract create(data: CreateCategoryDTO): Promise<CreatedCategoryDTO>;
   abstract findByName(name: string): Promise<CreatedCategoryDTO | null>;
+  abstract findById(id: number): Promise<CreatedCategoryDTO | null>;
 }
