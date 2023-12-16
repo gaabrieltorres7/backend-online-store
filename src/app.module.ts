@@ -7,7 +7,7 @@ import { CacheModule } from './modules/cache/cache.module';
 import { CategoryModule } from './modules/category/category.module';
 import { CityModule } from './modules/city/city.module';
 import { RolesGuard } from './modules/guards/roles.guard';
-// import { ProductModule } from './modules/product/product.module';
+import { ProductModule } from './modules/product/product.module';
 import { StateModule } from './modules/state/state.module';
 import { UserModule } from './modules/user/user.module';
 
@@ -20,7 +20,7 @@ import { UserModule } from './modules/user/user.module';
     CacheModule,
     AuthModule,
     CategoryModule,
-    // ProductModule,
+    ProductModule,
   ],
   controllers: [],
   providers: [
