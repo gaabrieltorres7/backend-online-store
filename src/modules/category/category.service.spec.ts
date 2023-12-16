@@ -1,4 +1,4 @@
-import { HttpException } from '@nestjs/common';
+import { HttpException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CategoryService } from './category.service';
 import { ICategoryRepository } from './repositories/category-interface';
@@ -60,5 +60,16 @@ describe('CategoryService', () => {
 
   it('should not be able to return a category if it not exists', async () => {
     expect(sut.findByName('test')).rejects.toBeInstanceOf(HttpException);
+  });
+
+  it('should be able to return a category by id', async () => {
+    await sut.create({ name: 'Category 1' });
+    const category = await sut.findById(1);
+
+    expect(category.name).toEqual('Category 1');
+  });
+
+  it('should not be able to return a category if it not exists', async () => {
+    expect(sut.findById(1)).rejects.toBeInstanceOf(NotFoundException);
   });
 });
