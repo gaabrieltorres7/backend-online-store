@@ -14,6 +14,7 @@ export class CategoryController {
     return await this.categoryService.findAll();
   }
 
+  @Roles(UserType.Admin)
   @Post('/create')
   async create(@Body() data: CreateCategorySchemaDTO) {
     return await this.categoryService.create(data);

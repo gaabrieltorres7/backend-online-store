@@ -7,7 +7,9 @@ import {
   Post,
 } from '@nestjs/common';
 import { UserService } from '../../modules/user/user.service';
+import { Roles } from '../decorators/roles.decorator';
 import { UserCreatedDTO } from './dto/user.dto';
+import { UserType } from './enum/user-type.enum';
 import { CreateUserSchemaDTO } from './schemas/create-user.schemas';
 
 @Controller('user')
@@ -24,11 +26,13 @@ export class UserController {
     return newUser;
   }
 
+  @Roles(UserType.Admin)
   @Get()
   async findAllUsers() {
     return await this.userService.findAllUsers();
   }
 
+  @Roles(UserType.Admin, UserType.User)
   @Get('/:userId')
   async findUserById(
     @Param('userId', ParseIntPipe) userId: number,
