@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCategoryDTO, CreatedCategoryDTO } from './dto/category.dto';
 import { ICategoryRepository } from './repositories/category-interface';
 
@@ -36,6 +41,16 @@ export class CategoryService {
 
     if (!category) {
       throw new HttpException('Category not found', HttpStatus.NOT_FOUND);
+    }
+
+    return category;
+  }
+
+  async findById(id: number): Promise<CreatedCategoryDTO> {
+    const category = await this.categoryRepository.findById(id);
+
+    if (!category) {
+      throw new NotFoundException('Category not found');
     }
 
     return category;
