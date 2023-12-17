@@ -24,4 +24,24 @@ export class ProductPrismaRepository implements IProductRepository {
 
     return createdProduct;
   }
+
+  async findById(id: number): Promise<CreatedProductDTO | null> {
+    const product = await this.prisma.product.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return product || null;
+  }
+
+  async delete(id: number): Promise<boolean> {
+    const product = await this.prisma.product.delete({
+      where: {
+        id,
+      },
+    });
+
+    return !!product;
+  }
 }

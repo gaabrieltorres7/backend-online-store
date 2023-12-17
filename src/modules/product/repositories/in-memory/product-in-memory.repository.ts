@@ -12,4 +12,20 @@ export class ProductInMemoryRepository implements IProductRepository {
     this.products.push(product);
     return product;
   }
+
+  async findById(id: number): Promise<CreatedProductDTO | null> {
+    const product = this.products.find((product) => product.id === id);
+    return product || null;
+  }
+
+  async delete(id: number): Promise<boolean> {
+    const productIndex = this.products.findIndex(
+      (product) => product.id === id,
+    );
+    if (productIndex !== -1) {
+      this.products.splice(productIndex, 1);
+      return true;
+    }
+    return false;
+  }
 }
