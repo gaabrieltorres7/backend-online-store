@@ -31,4 +31,26 @@ export class ProductService {
 
     return product;
   }
+
+  async findById(id: number) {
+    const product = await this.productRepository.findById(id);
+
+    if (!product) {
+      throw new NotFoundException('Product not found');
+    }
+
+    return product;
+  }
+
+  async delete(id: number) {
+    const product = await this.productRepository.findById(id);
+
+    if (!product) {
+      throw new NotFoundException('Product not found');
+    }
+
+    await this.productRepository.delete(id);
+
+    return true;
+  }
 }

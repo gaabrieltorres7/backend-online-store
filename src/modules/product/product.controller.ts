@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { Roles } from '../decorators/roles.decorator';
 import { UserType } from '../user/enum/user-type.enum';
 import { ProductService } from './product.service';
@@ -18,5 +26,17 @@ export class ProductController {
   @Post('/create')
   async create(@Body() data: CreateProductSchemaDTO) {
     return await this.productService.create(data);
+  }
+
+  @Roles(UserType.Admin, UserType.User)
+  @Get('/:id')
+  async findById(@Param('id', ParseIntPipe) productId: number) {
+    return await this.productService.findById(productId);
+  }
+
+  @Roles(UserType.Admin)
+  @Delete('/delete/:id')
+  async delete(@Param('id', ParseIntPipe) productId: number) {
+    return await this.productService.delete(productId);
   }
 }
