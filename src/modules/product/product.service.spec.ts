@@ -85,4 +85,41 @@ describe('ProductService', () => {
       }),
     ).rejects.toBeInstanceOf(NotFoundException);
   });
+
+  it('should be able to return a product by id', async () => {
+    const category = await categoryService.create({ name: 'Category 1' });
+    const product = await sut.create({
+      categoryId: category.id,
+      name: 'Product 1',
+      price: 10,
+      image: 'image',
+    });
+    const productById = await sut.findById(product.id);
+    expect(productById).toEqual({
+      categoryId: category.id,
+      name: 'Product 1',
+      price: 10,
+      image: 'image',
+    });
+  });
+
+  it('should not be able to return a product if you use an invalid id', () => {
+    expect(sut.findById(1234)).rejects.toBeInstanceOf(NotFoundException);
+  });
+
+  it('should be able to delete a product', async () => {
+    const category = await categoryService.create({ name: 'Category 1' });
+    const product = await sut.create({
+      categoryId: category.id,
+      name: 'Product 1',
+      price: 10,
+      image: 'image',
+    });
+    const productDeleted = await sut.delete(product.id);
+    expect(productDeleted).toBe(true);
+  });
+
+  it('should not be able to delete a product if you use an invalid id', () => {
+    expect(sut.delete(1234)).rejects.toBeInstanceOf(NotFoundException);
+  });
 });
