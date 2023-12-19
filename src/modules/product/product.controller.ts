@@ -6,11 +6,13 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
 } from '@nestjs/common';
 import { Roles } from '../decorators/roles.decorator';
 import { UserType } from '../user/enum/user-type.enum';
 import { ProductService } from './product.service';
 import { CreateProductSchemaDTO } from './schemas/create-product.schemas';
+import { UpdateProductSchemaDTO } from './schemas/update-product.schemas';
 
 @Roles(UserType.Admin, UserType.User)
 @Controller('product')
@@ -38,5 +40,14 @@ export class ProductController {
   @Delete('/delete/:id')
   async delete(@Param('id', ParseIntPipe) productId: number) {
     return await this.productService.delete(productId);
+  }
+
+  @Roles(UserType.Admin)
+  @Put('/update/:id')
+  async update(
+    @Param('id', ParseIntPipe) productId: number,
+    @Body() data: UpdateProductSchemaDTO,
+  ) {
+    return await this.productService.update(productId, data);
   }
 }

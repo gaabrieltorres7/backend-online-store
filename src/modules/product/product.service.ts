@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ICategoryRepository } from '../category/repositories/category-interface';
-import { CreateProductDTO } from './dto/product.dto';
+import { CreateProductDTO, UpdateProductDTO } from './dto/product.dto';
 import { IProductRepository } from './repositories/product-interface';
 
 @Injectable()
@@ -52,5 +52,17 @@ export class ProductService {
     await this.productRepository.delete(id);
 
     return true;
+  }
+
+  async update(id: number, data: UpdateProductDTO) {
+    const product = await this.productRepository.findById(id);
+
+    if (!product) {
+      throw new NotFoundException('Product not found');
+    }
+
+    const updatedProduct = await this.productRepository.update(id, data);
+
+    return updatedProduct;
   }
 }
