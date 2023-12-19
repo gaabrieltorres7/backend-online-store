@@ -122,4 +122,35 @@ describe('ProductService', () => {
   it('should not be able to delete a product if you use an invalid id', () => {
     expect(sut.delete(1234)).rejects.toBeInstanceOf(NotFoundException);
   });
+
+  it('should be able to update a product', async () => {
+    const category = await categoryService.create({ name: 'Category 1' });
+    const product = await sut.create({
+      categoryId: category.id,
+      name: 'Product 1',
+      price: 10,
+      image: 'image',
+    });
+    const productUpdated = await sut.update(product.id, {
+      name: 'Product 2',
+      price: 20,
+      image: 'image2',
+    });
+    expect(productUpdated).toEqual({
+      categoryId: category.id,
+      name: 'Product 2',
+      price: 20,
+      image: 'image2',
+    });
+  });
+
+  it('should not be able to update a product if the product does not exist', () => {
+    expect(
+      sut.update(1234, {
+        name: 'Product 2',
+        price: 20,
+        image: 'image2',
+      }),
+    ).rejects.toBeInstanceOf(NotFoundException);
+  });
 });
