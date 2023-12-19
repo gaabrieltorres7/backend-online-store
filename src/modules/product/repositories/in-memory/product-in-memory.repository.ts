@@ -1,4 +1,4 @@
-import { CreatedProductDTO } from '../../dto/product.dto';
+import { CreatedProductDTO, UpdateProductDTO } from '../../dto/product.dto';
 import { IProductRepository } from '../product-interface';
 
 export class ProductInMemoryRepository implements IProductRepository {
@@ -27,5 +27,27 @@ export class ProductInMemoryRepository implements IProductRepository {
       return true;
     }
     return false;
+  }
+
+  async update(
+    id: number,
+    data: UpdateProductDTO,
+  ): Promise<CreatedProductDTO | null> {
+    const product = this.products.find((product) => product.id === id);
+
+    if (!product) {
+      return null;
+    }
+
+    const updatedProduct = {
+      ...product,
+      ...data,
+    };
+
+    this.products = this.products.map((product) =>
+      product.id === id ? updatedProduct : product,
+    );
+
+    return updatedProduct;
   }
 }

@@ -8,3 +8,10 @@ export type CreateProductDTO = {
 export type CreatedProductDTO = {
   id: number;
 } & CreateProductDTO;
+
+export type UpdateProductDTO = {
+  categoryId?: number;
+  name?: string;
+  price?: number;
+  image?: string;
+};
