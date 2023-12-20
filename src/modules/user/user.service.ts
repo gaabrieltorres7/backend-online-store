@@ -1,6 +1,16 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { hash } from 'bcrypt';
-import { CreateUserDTO, UserCreatedDTO } from './dto/user.dto';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { compare, hash } from 'bcrypt';
+import {
+  CreateUserDTO,
+  UpdateUserPasswordDTO,
+  UserCreatedDTO,
+} from './dto/user.dto';
 import { IUserRepository } from './repositories/user-interface';
 
 @Injectable()
@@ -40,5 +50,27 @@ export class UserService {
     const user = await this.userRepository.findUserByEmail(email);
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     return user;
+  }
+
+  async updateUserPassword(
+    userId: number,
+    data: UpdateUserPasswordDTO,
+  ): Promise<UserCreatedDTO | null> {
+    const { newPassword, oldPassword } = data;
+
+    const user = await this.userRepository.findUserById(userId);
+
+    if (!user) throw new NotFoundException('User not found');
+
+    const passwordMatch = await compare(oldPassword, user.password);
+    if (!passwordMatch) throw new BadRequestException('Invalid password');
+
+    const newPasswordHashed = await hash(newPassword, 10);
+    const updatedUser = await this.userRepository.updateUserPassword(userId, {
+      oldPassword,
+      newPassword: newPasswordHashed,
+    });
+
+    return updatedUser;
   }
 }
