@@ -13,3 +13,8 @@ export type UserCreatedDTO = {
   Address?: ReturnAddressInUserDTO[];
   typeUser: number;
 } & CreateUserDTO;
+
+export type UpdateUserPasswordDTO = {
+  newPassword: string;
+  oldPassword: string;
+};

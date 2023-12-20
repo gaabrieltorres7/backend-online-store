@@ -9,3 +9,8 @@ export type ReturnLoginDTO = {
   accessToken: string;
   user: UserCreatedDTO;
 };
+
+export type LoginPayload = {
+  sub: number;
+  typeUser: number;
+};
