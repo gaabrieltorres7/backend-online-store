@@ -1,4 +1,8 @@
-import { CreateUserDTO, UserCreatedDTO } from '../dto/user.dto';
+import {
+  CreateUserDTO,
+  UpdateUserPasswordDTO,
+  UserCreatedDTO,
+} from '../dto/user.dto';
 
 export abstract class IUserRepository {
   abstract save(data: CreateUserDTO): Promise<UserCreatedDTO | null>;
@@ -9,4 +13,8 @@ export abstract class IUserRepository {
   ): Promise<UserCreatedDTO | null>;
   abstract findUserByEmail(email: string): Promise<UserCreatedDTO | null>;
   abstract findByCPF(cpf: string): Promise<UserCreatedDTO | null>;
+  abstract updateUserPassword(
+    userId: number,
+    data: UpdateUserPasswordDTO,
+  ): Promise<UserCreatedDTO | null>;
 }

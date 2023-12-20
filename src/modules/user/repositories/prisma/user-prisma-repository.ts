@@ -45,4 +45,17 @@ export class UserPrismaRepository implements IUserRepository {
   async findByCPF(cpf: string): Promise<UserCreatedDTO | null> {
     return await this.prisma.user.findUnique({ where: { cpf } });
   }
+
+  async updateUserPassword(
+    userId: number,
+    data: { newPassword: string; oldPassword: string },
+  ): Promise<UserCreatedDTO | null> {
+    const { newPassword } = data;
+    const updatedUser = await this.prisma.user.update({
+      where: { id: userId },
+      data: { password: newPassword, updatedAt: new Date() },
+    });
+
+    return updatedUser;
+  }
 }

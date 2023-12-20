@@ -1,4 +1,8 @@
-import { CreateUserDTO, UserCreatedDTO } from '../../dto/user.dto';
+import {
+  CreateUserDTO,
+  UpdateUserPasswordDTO,
+  UserCreatedDTO,
+} from '../../dto/user.dto';
 import { UserType } from '../../enum/user-type.enum';
 import { IUserRepository } from '../user-interface';
 export class UserInMemoryRepository implements IUserRepository {
@@ -42,5 +46,25 @@ export class UserInMemoryRepository implements IUserRepository {
     const user = this.users.find((user) => user.cpf === cpf);
 
     return user ?? null;
+  }
+
+  async updateUserPassword(
+    userId: number,
+    data: UpdateUserPasswordDTO,
+  ): Promise<UserCreatedDTO | null> {
+    const { newPassword, oldPassword } = data;
+    const user = this.users.find((user) => user.id === userId);
+
+    if (!user) {
+      return null;
+    }
+
+    if (user.password !== oldPassword) {
+      return null;
+    }
+
+    user.password = newPassword;
+
+    return user;
   }
 }
