@@ -1,4 +1,8 @@
-import { HttpException } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserType } from './enum/user-type.enum';
 import { UserInMemoryRepository } from './repositories/in-memory/user-in-memory.repository';
@@ -92,5 +96,33 @@ describe('UserService', () => {
     await expect(sut.findUserByIdUsingRelations(999)).rejects.toThrow(
       HttpException,
     );
+  });
+
+  it('should be able to update an user password', async () => {
+    await sut.createUser(USER_JOHN);
+    const updatedUser = await sut.updateUserPassword(USER_JOHN.id, {
+      oldPassword: '123456',
+      newPassword: '1234567',
+    });
+    expect(updatedUser).toEqual(updatedUser);
+  });
+
+  it('should not be able to update an user password when the user does not exist', async () => {
+    await expect(
+      sut.updateUserPassword(999, {
+        oldPassword: USER_JOHN.password,
+        newPassword: '1234567',
+      }),
+    ).rejects.toBeInstanceOf(NotFoundException);
+  });
+
+  it('should not be able to update an user password when the old password is invalid', async () => {
+    await sut.createUser(USER_JOHN);
+    await expect(
+      sut.updateUserPassword(USER_JOHN.id, {
+        oldPassword: '1234567',
+        newPassword: '12345678',
+      }),
+    ).rejects.toBeInstanceOf(BadRequestException);
   });
 });
