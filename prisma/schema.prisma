@@ -19,6 +19,7 @@ model User {
   typeUser  Int       @default(1)
   updatedAt DateTime  @default(now())
   Address   Address[]
+  Cart      Cart[]
 
   @@map("users")
 }
@@ -62,14 +63,15 @@ model Address {
 }
 
 model Product {
-  id         Int      @id @default(autoincrement())
-  name       String
-  price      Float
-  image      String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now())
-  categoryId Int
-  Category   Category @relation(fields: [categoryId], references: [id])
+  id          Int           @id @default(autoincrement())
+  name        String
+  price       Float
+  image       String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now())
+  categoryId  Int
+  Category    Category      @relation(fields: [categoryId], references: [id])
+  CartProduct CartProduct[]
 
   @@map("products")
 }
@@ -82,4 +84,28 @@ model Category {
   Products  Product[]
 
   @@map("categories")
+}
+
+model Cart {
+  id          Int           @id @default(autoincrement())
+  userId      Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now())
+  User        User          @relation(fields: [userId], references: [id])
+  CartProduct CartProduct[]
+
+  @@map("carts")
+}
+
+model CartProduct {
+  id        Int      @id @default(autoincrement())
+  cartId    Int
+  productId Int
+  amount    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  Cart      Cart     @relation(fields: [cartId], references: [id])
+  Product   Product  @relation(fields: [productId], references: [id])
+
+  @@map("cart_products")
 }
