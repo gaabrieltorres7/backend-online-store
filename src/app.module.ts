@@ -4,6 +4,8 @@ import { ZodValidationPipe } from 'nestjs-zod';
 import { AddressModule } from './modules/address/address.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CacheModule } from './modules/cache/cache.module';
+import { CartProductModule } from './modules/cart-product/cart-product.module';
+import { CartModule } from './modules/cart/cart.module';
 import { CategoryModule } from './modules/category/category.module';
 import { CityModule } from './modules/city/city.module';
 import { RolesGuard } from './modules/guards/roles.guard';
@@ -21,6 +23,8 @@ import { UserModule } from './modules/user/user.module';
     AuthModule,
     CategoryModule,
     ProductModule,
+    CartModule,
+    CartProductModule,
   ],
   controllers: [],
   providers: [
