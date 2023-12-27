@@ -1,3 +1,5 @@
+import { CreatedProductDTO } from 'src/modules/product/dto/product.dto';
+
 export type InsertProductToCartDTO = {
   productId: number;
   amount: number;
@@ -6,9 +8,7 @@ export type InsertProductToCartDTO = {
 export type CreatedCartDTO = {
   id: number;
   userId: number;
-  isActive: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  cartProducts?: CreatedCartProductDTO[];
 };
 
 export type CreatedCartProductDTO = {
@@ -16,4 +16,6 @@ export type CreatedCartProductDTO = {
   cartId: number;
   productId: number;
   amount: number;
+  product?: CreatedProductDTO;
+  cart?: CreatedCartDTO;
 };

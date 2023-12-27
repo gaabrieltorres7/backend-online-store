@@ -18,11 +18,21 @@ export class CartPrismaRepository implements ICartRepository {
     return cart;
   }
 
-  async getCartByUserId(userId: number): Promise<CreatedCartDTO | null> {
+  async getCartByUserId(
+    userId: number,
+    isRelations?: boolean,
+  ): Promise<CreatedCartDTO | null> {
     const cart = await this.prisma.cart.findFirst({
       where: {
         userId,
         isActive: true,
+      },
+      include: {
+        CartProduct: {
+          include: {
+            Product: isRelations,
+          },
+        },
       },
     });
 

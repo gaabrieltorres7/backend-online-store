@@ -16,8 +16,8 @@ export class CartService {
     return cart;
   }
 
-  async getCartByUserId(userId: number) {
-    const cart = await this.cartRepository.getCartByUserId(userId);
+  async getCartByUserId(userId: number, isRelations?: boolean) {
+    const cart = await this.cartRepository.getCartByUserId(userId, isRelations);
 
     if (!cart) {
       throw new NotFoundException('Cart not found');
@@ -33,6 +33,6 @@ export class CartService {
 
     await this.cartProductService.insertProductToCart(data, cart);
 
-    return cart;
+    return this.getCartByUserId(userId, true);
   }
 }
