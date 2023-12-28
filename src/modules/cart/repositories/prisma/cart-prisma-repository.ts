@@ -38,4 +38,19 @@ export class CartPrismaRepository implements ICartRepository {
 
     return cart;
   }
+
+  async clearCart(userId: number): Promise<string> {
+    const cart = await this.getCartByUserId(userId, true);
+
+    await this.prisma.cart.update({
+      where: {
+        id: cart?.id ? cart.id : 0,
+      },
+      data: {
+        isActive: false,
+      },
+    });
+
+    return JSON.stringify({ message: `The cart ${cart?.id} has been cleaned` });
+  }
 }

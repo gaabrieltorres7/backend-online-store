@@ -16,6 +16,14 @@ export class CartService {
     return cart;
   }
 
+  async clearCart(userId: number) {
+    try {
+      await this.cartRepository.clearCart(userId);
+    } catch (err) {
+      throw new NotFoundException('Cart not found');
+    }
+  }
+
   async getCartByUserId(userId: number, isRelations?: boolean) {
     const cart = await this.cartRepository.getCartByUserId(userId, isRelations);
 

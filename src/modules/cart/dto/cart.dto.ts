@@ -8,6 +8,7 @@ export type InsertProductToCartDTO = {
 export type CreatedCartDTO = {
   id: number;
   userId: number;
+  isActive: boolean;
   cartProducts?: CreatedCartProductDTO[];
 };
 

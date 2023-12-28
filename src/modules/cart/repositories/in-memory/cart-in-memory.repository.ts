@@ -47,4 +47,12 @@ export class CartInMemoryRepository implements ICartRepository {
 
     return cartProduct;
   }
+
+  async clearCart(userId: number): Promise<string> {
+    const updatedCart = this.carts.filter((cart) => cart.userId === userId);
+
+    updatedCart[0].isActive = false;
+
+    return `The cart ${updatedCart[0].id} has been cleaned`;
+  }
 }

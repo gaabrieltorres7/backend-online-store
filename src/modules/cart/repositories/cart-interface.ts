@@ -6,4 +6,5 @@ export abstract class ICartRepository {
     userId: number,
     isRelations?: boolean,
   ): Promise<CreatedCartDTO | null>;
+  abstract clearCart(userId: number): Promise<string>;
 }
