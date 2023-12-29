@@ -1,9 +1,19 @@
-import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { Roles } from '../decorators/roles.decorator';
 import { UserId } from '../decorators/user-id.decorator';
 import { UserType } from '../user/enum/user-type.enum';
 import { CartService } from './cart.service';
 import { CreateCartSchemaDTO } from './schemas/create-cart.schemas';
+import { UpdateCartSchemaDTO } from './schemas/update-cart.schemas';
 
 @Roles(UserType.Admin, UserType.User)
 @Controller('cart')
@@ -30,5 +40,24 @@ export class CartController {
   @Delete()
   async clearCart(@UserId() userId: number) {
     return await this.cartService.clearCart(userId);
+  }
+
+  @Delete('/product/:productId')
+  async deleteProductCart(
+    @Param('productId', ParseIntPipe) productId: number,
+    @UserId() userId: number,
+  ) {
+    return this.cartService.deleteProductInCart(productId, userId);
+  }
+
+  @Patch()
+  async updateProductInCart(
+    @Body() updateCartDTO: UpdateCartSchemaDTO,
+    @UserId() userId: number,
+  ) {
+    return await this.cartService.updateProductToCart(
+      { amount: updateCartDTO?.amount, productId: updateCartDTO?.productId },
+      userId,
+    );
   }
 }

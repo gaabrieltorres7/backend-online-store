@@ -3,6 +3,7 @@ import {
   CreatedCartDTO,
   CreatedCartProductDTO,
   InsertProductToCartDTO,
+  UpdateCartDTO,
 } from '../cart/dto/cart.dto';
 import { ProductService } from '../product/product.service';
 import { ICartProductRepository } from './repositories/cart-product-interface';
@@ -55,6 +56,31 @@ export class CartProductService {
     return this.cartProductRepository.updateProductAmount(
       cartProduct.id,
       cartProduct.amount + data.amount,
+    );
+  }
+
+  async updateProductInCart(
+    updateCartDTO: UpdateCartDTO,
+    cart: CreatedCartDTO,
+  ): Promise<CreatedCartDTO> {
+    await this.productService.findById(updateCartDTO.productId);
+
+    const cartProduct = await this.verifyProductToCart(
+      updateCartDTO.productId,
+      cart.id,
+    );
+
+    return this.cartProductRepository.updateProductToCart(
+      updateCartDTO,
+      cartProduct,
+    );
+  }
+
+  async deleteProductCart(productId: number, cartId: number) {
+    const cartProduct = await this.verifyProductToCart(productId, cartId);
+    return await this.cartProductRepository.deleteProductInCart(
+      productId,
+      cartProduct.id,
     );
   }
 }

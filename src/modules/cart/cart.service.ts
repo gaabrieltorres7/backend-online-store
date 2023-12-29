@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CartProductService } from '../cart-product/cart-product.service';
-import { InsertProductToCartDTO } from './dto/cart.dto';
+import { InsertProductToCartDTO, UpdateCartDTO } from './dto/cart.dto';
 import { ICartRepository } from './repositories/cart-interface';
 
 @Injectable()
@@ -42,5 +42,22 @@ export class CartService {
     await this.cartProductService.insertProductToCart(data, cart);
 
     return this.getCartByUserId(userId, true);
+  }
+
+  async updateProductToCart(updateCartDTO: UpdateCartDTO, userId: number) {
+    const cart = await this.getCartByUserId(userId).catch(async () => {
+      return this.createCart(userId);
+    });
+
+    return await this.cartProductService.updateProductInCart(
+      updateCartDTO,
+      cart,
+    );
+  }
+
+  async deleteProductInCart(productId: number, userId: number) {
+    const cart = await this.getCartByUserId(userId, true);
+
+    return await this.cartProductService.deleteProductCart(productId, cart.id);
   }
 }
