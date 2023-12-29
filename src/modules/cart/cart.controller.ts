@@ -55,9 +55,6 @@ export class CartController {
     @Body() updateCartDTO: UpdateCartSchemaDTO,
     @UserId() userId: number,
   ) {
-    return await this.cartService.updateProductToCart(
-      { amount: updateCartDTO?.amount, productId: updateCartDTO?.productId },
-      userId,
-    );
+    return await this.cartService.updateProductToCart(updateCartDTO, userId);
   }
 }
