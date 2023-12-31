@@ -9,6 +9,9 @@ export type CreatedCartDTO = {
   id: number;
   userId?: number;
   isActive?: boolean;
+  amount?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
   cartProducts?: CreatedCartProductDTO[];
 };
 
