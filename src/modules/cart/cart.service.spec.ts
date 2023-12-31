@@ -15,6 +15,8 @@ import { CartInMemoryRepository } from './repositories/in-memory/cart-in-memory.
 describe('CartService', () => {
   let sut: CartService;
   let cartProductService: CartProductService;
+  let productService: ProductService;
+  let categoryService: CategoryService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -43,9 +45,15 @@ describe('CartService', () => {
     }).compile();
 
     sut = module.get<CartService>(CartService);
+    cartProductService = module.get<CartProductService>(CartProductService);
+    productService = module.get<ProductService>(ProductService);
+    categoryService = module.get<CategoryService>(CategoryService);
   });
 
   it('should be defined', () => {
     expect(sut).toBeDefined();
+    expect(cartProductService).toBeDefined();
+    expect(productService).toBeDefined();
+    expect(categoryService).toBeDefined();
   });
 });

@@ -68,6 +68,8 @@ export class CartProductInMemoryRepository implements ICartProductRepository {
         cartProduct.productId !== productId && cartProduct.cartId !== cartId,
     );
 
-    return 'Product deleted successfully';
+    return JSON.stringify({
+      message: `The product ID ${productId} has been deleted successfully`,
+    });
   }
 }
