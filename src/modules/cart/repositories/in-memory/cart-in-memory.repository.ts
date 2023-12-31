@@ -21,10 +21,33 @@ export class CartInMemoryRepository implements ICartRepository {
 
     return cart;
   }
-  async getCartByUserId(userId: number): Promise<CreatedCartDTO | null> {
+  async getCartByUserId(
+    userId: number,
+    isRelations?: boolean,
+  ): Promise<CreatedCartDTO | null> {
+    if (!isRelations) {
+      const cart = this.carts.find((cart) => cart.userId === userId);
+      return cart || null;
+    }
+
     const cart = this.carts.find((cart) => cart.userId === userId);
 
-    return cart || null;
+    if (!cart) {
+      return null;
+    }
+
+    const cartProduct = {
+      id: 1,
+      cartId: cart.id,
+      productId: 1,
+      amount: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    cart.cartProducts = [cartProduct];
+
+    return cart;
   }
   async insertProductToCart(
     data: InsertProductToCartDTO,
@@ -53,6 +76,8 @@ export class CartInMemoryRepository implements ICartRepository {
 
     updatedCart[0].isActive = false;
 
-    return `The cart ${updatedCart[0].id} has been cleaned`;
+    return JSON.stringify({
+      message: `The cart ${updatedCart[0]?.id} has been cleaned`,
+    });
   }
 }
