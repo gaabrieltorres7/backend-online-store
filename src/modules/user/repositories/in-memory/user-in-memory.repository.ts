@@ -8,7 +8,7 @@ import { IUserRepository } from '../user-interface';
 export class UserInMemoryRepository implements IUserRepository {
   private users: UserCreatedDTO[] = [];
 
-  async save(data: CreateUserDTO): Promise<UserCreatedDTO | null> {
+  async createUser(data: CreateUserDTO): Promise<UserCreatedDTO> {
     const user: UserCreatedDTO = {
       id: 1,
       typeUser: UserType.User,

@@ -17,7 +17,7 @@ import { IUserRepository } from './repositories/user-interface';
 export class UserService {
   constructor(private readonly userRepository: IUserRepository) {}
 
-  async createUser(data: CreateUserDTO): Promise<UserCreatedDTO | null> {
+  async createUser(data: CreateUserDTO): Promise<UserCreatedDTO> {
     const userEmail = await this.userRepository.findUserByEmail(data.email);
     const userCPF = await this.userRepository.findByCPF(data.cpf);
 
@@ -25,7 +25,7 @@ export class UserService {
       throw new HttpException('User already exists', HttpStatus.CONFLICT);
 
     const password = await hash(data.password, 10);
-    return await this.userRepository.save({ ...data, password });
+    return await this.userRepository.createUser({ ...data, password });
   }
 
   async findUserById(id: number): Promise<UserCreatedDTO | null> {
