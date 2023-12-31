@@ -38,7 +38,7 @@ describe('ProductService', () => {
 
   it('should be able to return all products', async () => {
     const category = await categoryService.create({ name: 'Category 1' });
-    await sut.create({
+    const product = await sut.create({
       categoryId: category.id,
       name: 'Product 1',
       price: 10,
@@ -47,6 +47,7 @@ describe('ProductService', () => {
     const products = await sut.findAll();
     expect(products).toEqual([
       {
+        id: product.id,
         categoryId: category.id,
         name: 'Product 1',
         price: 10,
@@ -68,6 +69,7 @@ describe('ProductService', () => {
       image: 'image',
     });
     expect(product).toEqual({
+      id: product.id,
       categoryId: category.id,
       name: 'Product 1',
       price: 10,
@@ -96,6 +98,7 @@ describe('ProductService', () => {
     });
     const productById = await sut.findById(product.id);
     expect(productById).toEqual({
+      id: product.id,
       categoryId: category.id,
       name: 'Product 1',
       price: 10,
@@ -137,6 +140,7 @@ describe('ProductService', () => {
       image: 'image2',
     });
     expect(productUpdated).toEqual({
+      id: product.id,
       categoryId: category.id,
       name: 'Product 2',
       price: 20,

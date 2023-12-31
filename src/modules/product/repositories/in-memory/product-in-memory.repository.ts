@@ -1,4 +1,8 @@
-import { CreatedProductDTO, UpdateProductDTO } from '../../dto/product.dto';
+import {
+  CreateProductDTO,
+  CreatedProductDTO,
+  UpdateProductDTO,
+} from '../../dto/product.dto';
 import { IProductRepository } from '../product-interface';
 
 export class ProductInMemoryRepository implements IProductRepository {
@@ -8,7 +12,11 @@ export class ProductInMemoryRepository implements IProductRepository {
     return this.products;
   }
 
-  async create(product: CreatedProductDTO): Promise<CreatedProductDTO> {
+  async create(data: CreateProductDTO): Promise<CreatedProductDTO> {
+    const product: CreatedProductDTO = {
+      id: 1 + this.products.length,
+      ...data,
+    };
     this.products.push(product);
     return product;
   }
