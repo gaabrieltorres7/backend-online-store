@@ -57,6 +57,11 @@ describe('UserService', () => {
     expect(result).toHaveProperty('id');
   });
 
+  it('should not be able to create a new user when the email already exists', async () => {
+    await sut.createUser(USER_JOHN);
+    await expect(sut.createUser(USER_JOHN)).rejects.toThrow(HttpException);
+  });
+
   it('should be able to return an user by email', async () => {
     await sut.createUser(USER_JOHN);
     const user = await sut.findUserByEmail(USER_JOHN.email);
