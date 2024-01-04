@@ -110,3 +110,48 @@ model CartProduct {
 
   @@map("cart_products")
 }
+
+model Payment {
+  id                  Int               @id @default(autoincrement())
+  statusId            Int
+  price               Float
+  discount            Float
+  finalPrice          Float
+  type                String
+  paymentPixId        Int
+  paymentCreditCardId Int
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @default(now())
+  Status              Status            @relation(fields: [statusId], references: [id])
+  PixPayment          PixPayment        @relation(fields: [paymentPixId], references: [id])
+  CreditCardPayment   CreditCardPayment @relation(fields: [paymentCreditCardId], references: [id])
+
+  @@map("payments")
+}
+
+model PixPayment {
+  id          Int       @id @default(autoincrement())
+  code        String
+  datePayment DateTime  @default(now())
+  Payment     Payment[]
+
+  @@map("pix_payments")
+}
+
+model CreditCardPayment {
+  id             Int       @id @default(autoincrement())
+  amountPayments Int
+  Payment        Payment[]
+
+  @@map("credit_card_payments")
+}
+
+model Status {
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  Payment   Payment[]
+
+  @@map("status")
+}
