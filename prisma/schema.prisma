@@ -20,6 +20,7 @@ model User {
   updatedAt DateTime  @default(now())
   Address   Address[]
   Cart      Cart[]
+  Order     Order[]
 
   @@map("users")
 }
@@ -58,20 +59,22 @@ model Address {
   userId        Int
   City          City     @relation(fields: [cityId], references: [id])
   User          User     @relation(fields: [userId], references: [id])
+  Order         Order[]
 
   @@map("addresses")
 }
 
 model Product {
-  id          Int           @id @default(autoincrement())
-  name        String
-  price       Float
-  image       String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @default(now())
-  categoryId  Int
-  Category    Category      @relation(fields: [categoryId], references: [id])
-  CartProduct CartProduct[]
+  id           Int            @id @default(autoincrement())
+  name         String
+  price        Float
+  image        String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now())
+  categoryId   Int
+  Category     Category       @relation(fields: [categoryId], references: [id])
+  CartProduct  CartProduct[]
+  OrderProduct OrderProduct[]
 
   @@map("products")
 }
@@ -125,6 +128,7 @@ model Payment {
   Status              Status            @relation(fields: [statusId], references: [id])
   PixPayment          PixPayment        @relation(fields: [paymentPixId], references: [id])
   CreditCardPayment   CreditCardPayment @relation(fields: [paymentCreditCardId], references: [id])
+  Order               Order[]
 
   @@map("payments")
 }
@@ -154,4 +158,33 @@ model Status {
   Payment   Payment[]
 
   @@map("status")
+}
+
+model Order {
+  id           Int            @id @default(autoincrement())
+  userId       Int
+  addressId    Int
+  paymentId    Int
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now())
+  User         User           @relation(fields: [userId], references: [id])
+  Address      Address        @relation(fields: [addressId], references: [id])
+  Payment      Payment        @relation(fields: [paymentId], references: [id])
+  OrderProduct OrderProduct[]
+
+  @@map("orders")
+}
+
+model OrderProduct {
+  id        Int      @id @default(autoincrement())
+  orderId   Int
+  productId Int
+  amount    Int
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  Order     Order    @relation(fields: [orderId], references: [id])
+  Product   Product  @relation(fields: [productId], references: [id])
+
+  @@map("order_products")
 }
