@@ -48,8 +48,8 @@ JWT_SECRET="testSecret"
 ```bash
 cd backend-online-store
 npm i
-npm run start
 docker compose up
+npm run start
 ```
 
 <h2 id="colab">🤝 Collaborators</h2>
