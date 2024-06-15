@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-    <b>Developed e-commerce REST API using Node/TS/NestJS. Ensured secure authentication (bcrypt, JWT), used Prisma ORM, Docker for PostgreSQL, followed SOLID principles. Besides that used cache, authorization, decorators and unit test with jest and tdd. Under development...</b>
+    <b>Developed e-commerce REST API using Node/TS/NestJS. Ensured secure authentication (bcrypt, JWT), used Prisma ORM, Docker for PostgreSQL, followed SOLID principles. Besides that used cache, authorization, decorators and unit test with jest and tdd.</b>
 </p>
 
 <h2 id="technologies">💻 Technologies</h2>
