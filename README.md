@@ -16,7 +16,6 @@
 - TypeScript
 - NestJS
 - PostgreSQL
-- Docker
 - Jest
 - PrismaORM
 
@@ -26,7 +25,6 @@
 
 - NodeJS
 - Git
-- Docker
 
 <h3>Cloning</h3>
 
@@ -48,7 +46,6 @@ JWT_SECRET="testSecret"
 ```bash
 cd backend-online-store
 npm i
-docker compose up
 npm run start
 ```
 
